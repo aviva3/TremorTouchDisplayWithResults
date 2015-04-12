@@ -32,7 +32,8 @@ import bigtouch.UserParamsBigTouch;
 
 public class DrawingView extends View implements OnTouchListener{
 
-	private Paint paint;
+	private Paint circlesPaint;
+	private Paint textPaint;
 	private String resultsFilePath;
 	private String circlesFilePath;
 	private ArrayList<TestPoint> testPoints;
@@ -61,7 +62,10 @@ public class DrawingView extends View implements OnTouchListener{
 		this.setOnTouchListener(this);
 		rand = new Random();
 
-		paint = new Paint();
+		circlesPaint = new Paint();
+		textPaint = new Paint();
+		textPaint.setColor(Color.WHITE);
+		textPaint.setTextSize(25f);
 		createTestPoints();
 		createUserFromTestPoints();
 		testPointsIter = testPoints.listIterator();
@@ -165,40 +169,58 @@ public class DrawingView extends View implements OnTouchListener{
 		canvas.drawColor(Color.BLACK);
 
 		//Set paint general properties
-		paint.setAntiAlias(true);
+		circlesPaint.setAntiAlias(true);
 
 		//Draw target circle
-		paint.setColor(Color.MAGENTA);
-		paint.setAlpha(255);
+		circlesPaint.setColor(Color.MAGENTA);
+		circlesPaint.setAlpha(255);
 		TestCircle tc = currTestPoint.getTargetCircle();
-		canvas.drawCircle(tc.getX(), tc.getY(), tc.getRadius(), paint);
+		canvas.drawCircle(tc.getX(), tc.getY(), tc.getRadius(), circlesPaint);
 
 		//Draw touches
 		int lastTouchId = -1;
 		int currTouchId;
+				
 		for (TestCircle circle : currTestPoint.getTestCircles()){
 			currTouchId = circle.getTouchId();
 			if (currTouchId != lastTouchId){
-				paint.setColor(getColorFromTouchId(currTouchId));
+				circlesPaint.setColor(getColorFromTouchId(currTouchId));
 				lastTouchId = currTouchId;
 			}
-			paint.setAlpha(circle.getAlpha());
-			canvas.drawCircle(circle.getX(), circle.getY(), circle.getRadius(), paint);
+			
+			circlesPaint.setAlpha(circle.getAlpha());
+			canvas.drawCircle(circle.getX(), circle.getY(), circle.getRadius(), circlesPaint);
 		}
-
+		
 		//Draw target circle
-		paint.setColor(Color.MAGENTA);
-		paint.setAlpha(30);
+		circlesPaint.setColor(Color.MAGENTA);
+		circlesPaint.setAlpha(30);
 		TestCircle tc2 = currTestPoint.getTargetCircle();
-		canvas.drawCircle(tc2.getX(), tc2.getY(), tc2.getRadius(), paint);
+		canvas.drawCircle(tc2.getX(), tc2.getY(), tc2.getRadius(), circlesPaint);
 
 		//Draw Guess
-		paint.setColor(Color.YELLOW);
-		paint.setAlpha(255);
+		circlesPaint.setColor(Color.YELLOW);
+		circlesPaint.setAlpha(255);
 		ArrayList<Touch> fTouches = MultiTouch.filterTouchesByFinger(currTest.getTouches(), MultiTouch.guessFingure(currTest.getTouches(), user.getUserParamsMultiTouch()));
 		Circle g = BigTouch.guessCircleBigTouch(fTouches, user.getUserParamsBigTouch());
-		canvas.drawCircle((float)g.getCenter().getX(),(float)g.getCenter().getY(),(float)g.getRadius(), paint);
+		canvas.drawCircle((float)g.getCenter().getX(),(float)g.getCenter().getY(),(float)g.getRadius(), circlesPaint);
 
+		//Draw times
+		int currPointerId;
+		ArrayList<Integer> pointers = null;
+		lastTouchId = -1;
+		for (TestCircle circle : currTestPoint.getTestCircles()){
+			currTouchId = circle.getTouchId();
+			if (currTouchId != lastTouchId){
+				pointers = new ArrayList<Integer>();
+				lastTouchId = currTouchId;
+			}
+			currPointerId = circle.getPointerId();
+			if (!pointers.contains(currPointerId)){
+				canvas.drawText(String.valueOf(circle.getTimeSinceStart()),circle.getX(), circle.getY(), textPaint);
+				pointers.add(currPointerId);
+			}
+		}
 	}
 
 
