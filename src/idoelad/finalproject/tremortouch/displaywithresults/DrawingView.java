@@ -65,7 +65,6 @@ public class DrawingView extends View implements OnTouchListener{
 		circlesPaint = new Paint();
 		textPaint = new Paint();
 		textPaint.setColor(Color.WHITE);
-		textPaint.setTextSize(25f);
 		createTestPoints();
 		createUserFromTestPoints();
 		testPointsIter = testPoints.listIterator();
@@ -170,7 +169,16 @@ public class DrawingView extends View implements OnTouchListener{
 
 		//Set paint general properties
 		circlesPaint.setAntiAlias(true);
-
+		
+		//Draw userParams
+		textPaint.setTextSize(15f);
+		UserParamsBigTouch upBig = user.getUserParamsBigTouch();
+		UserParamsMultiTouch upMulti = user.getUserParamsMultiTouch();
+		String paramsBig = "BIG: wAvg="+d2s(upBig.getwAvg())+" | "+"wDown="+d2s(upBig.getwDown())+" | "+"wPressure="+d2s(upBig.getwPressure())+" | "+"wRadius="+d2s(upBig.getwRadius())+" | "+"wTime="+d2s(upBig.getwTime());
+		String paramsMulti ="MULTI: wFirst="+d2s(upMulti.getwFirst())+" | "+"wMaxPressure="+d2s(upMulti.getwMaxPressure())+" | "+"wMaxTime="+d2s(upMulti.getwMaxTime())+" | "+"wStructure="+d2s(upMulti.getwStructure());
+		canvas.drawText(paramsBig, 0, 20, textPaint);
+		canvas.drawText(paramsMulti, 0, 50, textPaint);
+		
 		//Draw target circle
 		circlesPaint.setColor(Color.MAGENTA);
 		circlesPaint.setAlpha(255);
@@ -206,6 +214,7 @@ public class DrawingView extends View implements OnTouchListener{
 		canvas.drawCircle((float)g.getCenter().getX(),(float)g.getCenter().getY(),(float)g.getRadius(), circlesPaint);
 
 		//Draw times
+		textPaint.setTextSize(25f);
 		int currPointerId;
 		ArrayList<Integer> pointers = null;
 		lastTouchId = -1;
@@ -270,5 +279,9 @@ public class DrawingView extends View implements OnTouchListener{
 		return true;
 	}
 
+	private static String d2s(double d){
+		String s = String.format("%.3f",d);
+		return s;
+	}
 
 }

@@ -153,10 +153,9 @@ public class GuessFactoryMultiTouch extends GuessFactory {
 	
 	/////////////////////////////// Filters /////////////////////////
 	private static ArrayList<Touch> getPointerTouches(ArrayList<Touch> touches, int pointerId){
-		int maxPointer = getMaxPointer(touches);
 		ArrayList<Touch> pTouches = new ArrayList<Touch>();
 		for (Touch t : touches){
-			if (getPointerIdBug(t.getPointerId(), maxPointer) == pointerId){
+			if (t.getPointerId() == pointerId){
 				pTouches.add(t);
 			}
 		}
