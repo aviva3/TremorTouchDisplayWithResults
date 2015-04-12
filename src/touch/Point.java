@@ -1,4 +1,4 @@
-package fixtouch;
+package touch;
 
 public class Point {
 	private double x;

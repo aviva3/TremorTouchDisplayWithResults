@@ -1,4 +1,4 @@
-package fixtouch;
+package touch;
 import java.util.ArrayList;
 
 import multitouch.UserParamsMultiTouch;

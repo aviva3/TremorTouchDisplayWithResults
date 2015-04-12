@@ -1,12 +1,13 @@
-package fixtouch;
+package touch;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import fixtouch.Circle;
-import fixtouch.Consts;
-import fixtouch.Guess;
-import fixtouch.Point;
-import fixtouch.Touch;
+import touch.Circle;
+import touch.Consts;
+import touch.Guess;
+import touch.Point;
+import touch.Touch;
+
 
 
 

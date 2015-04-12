@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
 
-import fixtouch.Circle;
-import fixtouch.Point;
-import fixtouch.Test;
-import fixtouch.Touch;
-import fixtouch.User;
+import touch.Circle;
+import touch.Point;
+import touch.Test;
+import touch.Touch;
+import touch.User;
+
 
 import multitouch.MultiTouch;
 import multitouch.UserParamsMultiTouch;

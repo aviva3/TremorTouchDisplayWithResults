@@ -1,4 +1,4 @@
-package fixtouch;
+package touch;
 
 public class Touch implements Comparable<Touch>{
 	private Point point;

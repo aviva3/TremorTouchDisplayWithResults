@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
-import fixtouch.Circle;
-import fixtouch.Consts;
-import fixtouch.Guess;
-import fixtouch.Point;
-import fixtouch.Test;
-import fixtouch.Touch;
-import fixtouch.TouchType;
+import touch.Circle;
+import touch.Consts;
+import touch.Guess;
+import touch.Point;
+import touch.Test;
+import touch.Touch;
+import touch.TouchType;
+
 
 
 import bigtouch.GuessFactoryBigTouch;

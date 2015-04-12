@@ -3,12 +3,13 @@ package multitouch;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import fixtouch.Circle;
-import fixtouch.Consts;
-import fixtouch.Guess;
-import fixtouch.GuessFactory;
-import fixtouch.Point;
-import fixtouch.Touch;
+import touch.Circle;
+import touch.Consts;
+import touch.Guess;
+import touch.GuessFactory;
+import touch.Point;
+import touch.Touch;
+
 
 import android.util.Log;
 
@@ -166,11 +167,9 @@ public class GuessFactoryMultiTouch extends GuessFactory {
 	
 	public static int getMaxPointer(ArrayList<Touch> touches){
 
-		int firstPointerId = touches.get(0).getPointerId();
 		int max = 0;
 		int pointers;
 		for (Touch t : touches){
-//			pointers = t.getPointerId() - firstPointerId +1;
 			pointers = t.getPointerId();
 			if (pointers > max){
 				max = pointers;
@@ -179,18 +178,6 @@ public class GuessFactoryMultiTouch extends GuessFactory {
 		
 		return max;
 	}
-	
-	//TODO after bug fixing should return pointerId.
-	private static int getPointerIdBug(int pointerId, int maxPointerId){
-		return pointerId - maxPointerId +1;
-	}
-	
-	private static void printPointersToLog(ArrayList<Touch> touches){
-		String s = "";
-		for (Touch t : touches){
-			s += t.getPointerId() + ",";
-		}
-		Log.i("@@@",s);
-	}
+
 	
 }

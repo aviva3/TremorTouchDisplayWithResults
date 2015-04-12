@@ -2,12 +2,13 @@ package bigtouch;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import fixtouch.Circle;
-import fixtouch.Consts;
-import fixtouch.Guess;
-import fixtouch.GuessFactory;
-import fixtouch.Point;
-import fixtouch.Touch;
+import touch.Circle;
+import touch.Consts;
+import touch.Guess;
+import touch.GuessFactory;
+import touch.Point;
+import touch.Touch;
+
 
 
 
