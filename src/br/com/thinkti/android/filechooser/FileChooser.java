@@ -109,7 +109,15 @@ public class FileChooser extends ListActivity {
     		
     		//Type
     		String fileName = fileSelected.getName();
-    		String type = fileName.substring(fileName.indexOf("results_")+8, fileName.lastIndexOf("_"));
+    		
+    		String type = "";
+    		if (fileName.indexOf("results_") != -1){ //Regular results
+        		type = fileName.substring(fileName.indexOf("results_")+8, fileName.lastIndexOf("_"));
+    		}
+    		else{ //Big and Multi results
+    			type = fileName.substring(fileName.lastIndexOf('_')+1,fileName.indexOf('.'));
+    		}
+    		
     		
     		//Circles files
     		String circlesFilePath = dir + "/circles_" + type + ".csv";
