@@ -140,8 +140,6 @@ public class GuessFactoryMultiTouch extends GuessFactory {
 		Point p1d = new Point(x1, y1);
 
 		int selectedPointerId;
-//		System.out.println("xDiff = "+ (x1-x0) + " | yDiff = " + (y0-y1));
-//		System.out.println("\navg: "+avgDist+" | avg*factor: "+avgDist*Consts.THUMB_FACTOR+" | dist =  "+Point.distance(p0d, p1d));
 		if (Point.distance(p0d, p1d) > avgDist*Consts.THUMB_FACTOR){ //TODO left handed?
 			selectedPointerId = minXs.get(1).getPointerId();
 		}

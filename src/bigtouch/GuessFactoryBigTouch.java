@@ -19,21 +19,21 @@ public class GuessFactoryBigTouch extends GuessFactory{
 		ArrayList<Touch> subTouches = subTime(touches, start, end);
 		return avarage(subTouches);
 	}
-	
+
 	public static Guess percntPressure(ArrayList<Touch> touches, double percentile){
 		return avarage(pressurePercentile(touches, percentile));
 	}
-	
+
 	public static Guess maxRadius(ArrayList<Touch> touches, double radius){
 		return avarage(underMaxRadius(touches,radius));
 	}
-	
+
 	public static Guess onlyDown(ArrayList<Touch> touches){
 		return avarage(onlyDownTouches(touches));
 	}
-	
 
-	
+
+
 	////////  Filters /////////////
 	private static ArrayList<Touch> subTime(ArrayList<Touch> touches, long start, long end){
 		ArrayList<Touch> subTouches = new ArrayList<Touch>();
@@ -58,7 +58,7 @@ public class GuessFactoryBigTouch extends GuessFactory{
 		return subTouches;
 	}
 
-	
+
 	private static ArrayList<Touch> pressurePercentile(ArrayList<Touch> touches, double percentile){
 		int i;
 		double sum, tot;
@@ -71,8 +71,8 @@ public class GuessFactoryBigTouch extends GuessFactory{
 		double minPressure = touches.get(i-1).getPressure();
 		return minPressure(touches, minPressure);
 	}
-	
-	
+
+
 	private static ArrayList<Touch> underMaxRadius(ArrayList<Touch> touches, double radius){
 		ArrayList<Touch> subTouches = new ArrayList<Touch>();
 		double totX = 0;
@@ -85,7 +85,7 @@ public class GuessFactoryBigTouch extends GuessFactory{
 
 		double xAv = totX/touches.size();
 		double yAv = totY/touches.size();
-		
+
 		for (Touch touch : touches){
 			if (touch.getPoint().getX() > xAv + radius) continue;
 			if (touch.getPoint().getY() > yAv + radius) continue;

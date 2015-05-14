@@ -45,7 +45,6 @@ public class TestActivity extends Activity{
 		try {
 			dv = new DrawingView(this, fileSelected, circlesFilePath);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    Canvas canvas = new Canvas();

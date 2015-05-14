@@ -15,6 +15,9 @@ import touch.Touch;
 public abstract class GuessFactory {
 
 	public static Guess avarage(ArrayList<Touch> touches){
+		if (touches.size() == 0){
+			return null;
+		}
 		double totX = 0;
 		double totY = 0;
 		double totRad = 0;
