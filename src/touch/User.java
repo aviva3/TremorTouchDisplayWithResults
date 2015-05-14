@@ -1,6 +1,8 @@
 package touch;
 import java.util.ArrayList;
 
+import deviationtouch.UserParamsDeviationTouch;
+
 import multitouch.UserParamsMultiTouch;
 
 import bigtouch.UserParamsBigTouch;
@@ -14,6 +16,7 @@ public class User {
 	private double totTouches = 0;
 	private UserParamsBigTouch userParamsBigTouch;
 	private UserParamsMultiTouch userParamsMultiTouch;
+	private UserParamsDeviationTouch userParamsDeviationTouch;
 	
 	public User(String name) {
 		this.name = name;
@@ -74,6 +77,16 @@ public class User {
 	public void setUserParamsMultiTouch(UserParamsMultiTouch userParamsMultiTouch) {
 		this.userParamsMultiTouch = userParamsMultiTouch;
 	}
+
+	public UserParamsDeviationTouch getUserParamsDeviationTouch() {
+		return userParamsDeviationTouch;
+	}
+
+	public void setUserParamsDeviationTouch(
+			UserParamsDeviationTouch userParamsDeviationTouch) {
+		this.userParamsDeviationTouch = userParamsDeviationTouch;
+	}
+	
 	
 	
 	

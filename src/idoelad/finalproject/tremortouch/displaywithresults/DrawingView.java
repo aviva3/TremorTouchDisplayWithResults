@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
 
+import deviationtouch.DeviationTouch;
+import deviationtouch.TargertNGuess;
+import deviationtouch.UserParamsDeviationTouch;
+
 import touch.Circle;
 import touch.Point;
 import touch.Test;
@@ -131,6 +135,19 @@ public class DrawingView extends View implements OnTouchListener{
 		user.setTests(tests);
 		user.setUserParamsBigTouch(BigTouch.getBigTouchParams(tests));
 		user.setUserParamsMultiTouch(MultiTouch.getMultiTouchParams(tests));
+		
+		ArrayList<TargertNGuess> tngs = new ArrayList<TargertNGuess>();
+		for (TestPoint tp : testPoints){
+			ArrayList<Touch> touches = testCirclesToTouches(tp.getTestCircles());
+			int pointerId = MultiTouch.guessFingure(touches, user.getUserParamsMultiTouch()); 
+			ArrayList<Touch> filtered = MultiTouch.filterTouchesByFinger(touches, pointerId);
+			Circle guess = BigTouch.guessCircleBigTouch(filtered, user.getUserParamsBigTouch());
+			TargertNGuess tng = new TargertNGuess(new Circle(new Point(tp.getTargetCircle().getX(), tp.getTargetCircle().getY()), tp.getTargetCircle().getRadius()), guess);
+			tngs.add(tng);
+		}
+		UserParamsDeviationTouch upDev = DeviationTouch.getDeviationTouchParams(tngs);
+		user.setUserParamsDeviationTouch(upDev);
+
 	}
 
 	private ArrayList<Touch> testCirclesToTouches(ArrayList<TestCircle> testCircles){
@@ -173,10 +190,13 @@ public class DrawingView extends View implements OnTouchListener{
 		textPaint.setTextSize(15f);
 		UserParamsBigTouch upBig = user.getUserParamsBigTouch();
 		UserParamsMultiTouch upMulti = user.getUserParamsMultiTouch();
+		UserParamsDeviationTouch upDev = user.getUserParamsDeviationTouch();
 		String paramsBig = "BIG: wAvg="+d2s(upBig.getwAvg())+" | "+"wDown="+d2s(upBig.getwDown())+" | "+"wPressure="+d2s(upBig.getwPressure())+" | "+"wRadius="+d2s(upBig.getwRadius())+" | "+"wTime="+d2s(upBig.getwTime());
 		String paramsMulti ="MULTI: wFirst="+d2s(upMulti.getwFirst())+" | "+"wMaxPressure="+d2s(upMulti.getwMaxPressure())+" | "+"wMaxTime="+d2s(upMulti.getwMaxTime())+" | "+"wStructure="+d2s(upMulti.getwStructure());
+		String paramsDev = "DEVIATION: x="+d2s(upDev.getxDev())+" | "+"y="+d2s(upDev.getyDev())+" | "+"xWeight="+d2s(upDev.getxWeight())+" | "+"yWeight="+d2s(upDev.getyWeight());
 		canvas.drawText(paramsBig, 0, 20, textPaint);
 		canvas.drawText(paramsMulti, 0, 50, textPaint);
+		canvas.drawText(paramsDev, 0, 80, textPaint);
 		
 		//Draw target circle
 		circlesPaint.setColor(Color.MAGENTA);
@@ -210,6 +230,8 @@ public class DrawingView extends View implements OnTouchListener{
 		circlesPaint.setAlpha(255);
 		ArrayList<Touch> fTouches = MultiTouch.filterTouchesByFinger(currTest.getTouches(), MultiTouch.guessFingure(currTest.getTouches(), user.getUserParamsMultiTouch()));
 		Circle g = BigTouch.guessCircleBigTouch(fTouches, user.getUserParamsBigTouch());
+		double[] newLocation = DeviationTouch.getNewLocation(g.getCenter().getX(), g.getCenter().getY(), user.getUserParamsDeviationTouch());
+		g.setCenter(new Point(newLocation[0], newLocation[1]));
 		canvas.drawCircle((float)g.getCenter().getX(),(float)g.getCenter().getY(),(float)g.getRadius(), circlesPaint);
 
 		//Draw times

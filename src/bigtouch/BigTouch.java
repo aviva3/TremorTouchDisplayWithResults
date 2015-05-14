@@ -12,10 +12,6 @@ import touch.Test;
 import touch.Touch;
 import touch.TouchType;
 
-
-
-
-
 public class BigTouch extends TouchType{
 	public static UserParamsBigTouch getBigTouchParams(ArrayList<Test> tests) throws IOException{
 
